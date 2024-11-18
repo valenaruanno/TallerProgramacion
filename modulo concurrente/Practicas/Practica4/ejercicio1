@@ -1,0 +1,105 @@
+programa ejercicio1
+procesos
+  proceso juntarFlores (ES listo: boolean)
+  comenzar
+    mover
+    si (PosCa = 100)
+      listo:= T
+    si (HayFlorEnLaEsquina)
+      mientras (HayFlorEnLaEsquina)
+        tomarFlor
+    repetir 2
+      derecha
+    mover
+    repetir 2
+      derecha
+  fin
+areas
+  ciudad : AreaC (1,1,100,100)
+robots
+  robot cliente 
+  variables
+    quien, cantFlores, aux, pos: numero
+    listo : boolean
+  comenzar
+    RecibirMensaje (quien, s)
+    listo:= F
+    mientras (listo = F )
+      Random (cantFlores,1,4)
+      EnviarMensaje (quien, s)
+      EnviarMensaje (cantFlores, s)
+      EnviarMensaje (PosAv, s)
+      pos:= PosCa + 1
+      EnviarMensaje (pos, s)
+      RecibirMensaje (aux, s)
+      si (PosCa + 1 < 100)
+        juntarFlores (listo)
+      si (listo = F)
+        mientras ((PosCa < 100) y (HayFlorEnLaBolsa))
+          depositarFlor
+          mover
+        si (PosCa = 100)
+          listo:= V
+    EnviarMensaje (0, s)
+  fin
+  robot servidor
+  variables
+    cantR, cantF, quien, av, ca: numero 
+  comenzar
+    EnviarMensaje (1, r1)
+    EnviarMensaje (2, r2)
+    EnviarMensaje (3, r3)
+    cantR:= 0
+    mientras (cantR < 4)
+      RecibirMensaje (quien, *)
+      si (quien = 1)
+        RecibirMensaje (cantF, r1)
+        si (cantF <> 0)
+          RecibirMensaje (av, r1)
+          RecibirMensaje (ca, r1)
+          Pos (av,ca)
+          repetir cantF
+            depositarFlor
+          Pos (100,100)
+          EnviarMensaje (1, r1)
+        sino
+          cantR:= cantR + 1
+      sino
+        si (quien = 2)
+          RecibirMensaje (cantF, r2)
+          si (cantF <> 0)
+            RecibirMensaje (av, r1)
+            RecibirMensaje (ca, r1)
+            Pos (av,ca)
+            repetir cantF
+              depositarFlor
+            Pos (100,100)
+            EnviarMensaje (1, r1)
+          sino
+            cantR:= cantR + 1
+        sino
+          RecibirMensaje (cantF, r3)
+          si (cantF <> 0)
+            RecibirMensaje (av, r1)
+            RecibirMensaje (ca, r1)
+            Pos (av,ca)
+            repetir cantF
+              depositarFlor
+            Pos (100,100)
+            EnviarMensaje (1, r1)
+          sino
+            cantR:= cantR + 1
+  fin
+variables
+  r1,r2,r3 : cliente
+  s: servidor
+comenzar
+  AsignarArea (r1,ciudad)
+  AsignarArea (r2, ciudad)
+  AsignarArea (r3, ciudad)
+  AsignarArea (s, ciudad)
+  Iniciar (r1,1,1)
+  Iniciar (r2, 2,1)
+  Iniciar (r3,3,1)
+  Iniciar (s,100,100)
+fin

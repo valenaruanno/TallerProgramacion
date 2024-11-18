@@ -1,0 +1,87 @@
+programa ejercicio4
+procesos
+  proceso moverR (E av: numero; E ca : numero; ES hay: boolean)
+  comenzar
+    BloquearEsquina(10,10)
+    Pos(10,10)
+    si (HayFlorEnLaEsquina)
+      tomarFlor
+    sino
+      hay:= F
+    si (hay = V)
+      BloquearEsquina(11,11)
+      Pos(11,11)
+      LiberarEsquina (10,10)
+      depositarFlor
+      Pos (av,ca)
+      LiberarEsquina (11,11)
+    sino
+      Pos (av,ca)
+      LiberarEsquina(10,10)
+  fin
+areas
+  coordi: AreaP (1,1,1,1)
+  areaR1: AreaP (9,9,9,9)
+  areaR2: AreaP (9,10,9,10)
+  areaR3: AreaP (9,11,9,11)
+  areaR4: AreaP (9,12,9,12)
+  areaR: AreaPC (10,10,10,10)
+  areaD: AreaPC (11,11,11,11)
+robots
+  robot recolector
+  variables 
+    av,ca, quien: numero
+    hay: boolean
+  comenzar
+    RecibirMensaje (quien, c)
+    hay:= V
+    av:= PosAv
+    ca:= PosCa
+    mientras (hay = V)
+      moverR (av, ca, hay)
+    EnviarMensaje (quien, c)
+  fin
+  robot coordinador
+  variables
+    av, ca, quien: numero 
+  comenzar
+    av:= PosAv
+    ca:= PosCa
+    EnviarMensaje (1, r1)
+    EnviarMensaje (2, r2)
+    EnviarMensaje (3, r3)
+    EnviarMensaje (4, r4)
+    repetir 3
+      RecibirMensaje (quien, *)
+    RecibirMensaje (quien, *)
+    Informar (quien)
+    Pos (11,11)
+    si (HayFlorEnLaEsquina)
+      mientras (HayFlorEnLaEsquina)
+        tomarFlor
+    Pos (av,ca)
+  fin
+variables
+  r1,r2,r3,r4: recolector
+  c: coordinador
+comenzar
+  AsignarArea (r1, areaR1)
+  AsignarArea (r1, areaR)
+  AsignarArea (r1,areaD)
+  AsignarArea (r2, areaR2)
+  AsignarArea (r2, areaR)
+  AsignarArea (r2, areaD)
+  AsignarArea (r3, areaR3)
+  AsignarArea (r3, areaR)
+  AsignarArea (r3, areaD)
+  AsignarArea (r4, areaR4)
+  AsignarArea (r4, areaR)
+  AsignarArea (r4, areaD)
+  AsignarArea (c, areaD)
+  AsignarArea (c, coordi)
+  Iniciar (r1, 9,9)
+  Iniciar (r2, 9,10)
+  Iniciar (r3, 9,11)
+  Iniciar (r4, 9,12)
+  Iniciar (c, 1,1)
+fin

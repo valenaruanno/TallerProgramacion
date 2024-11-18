@@ -1,0 +1,94 @@
+programa ejercicio3
+areas
+  areaA1 : AreaP (1,1,10,1)
+  areaA2 : AreaP (11,1,20,1)
+  areaB1 : AreaP (1,5,10,5)
+  areaB2 : AreaP (11,5,20,5)
+robots
+  robot robotA1
+  variables
+    papeles: numero 
+  comenzar
+    papeles:= 0
+    derecha 
+    si (HayPapelEnLaEsquina)
+      mientras (HayPapelEnLaEsquina)
+        tomarPapel
+        papeles:= papeles + 1
+    repetir 9
+      mover 
+      si (HayPapelEnLaEsquina)
+        mientras (HayPapelEnLaEsquina)
+          tomarPapel
+          papeles:= papeles + 1
+    EnviarMensaje (papeles, a2)
+  fin
+  robot robotA2
+  variables
+    papeles : numero
+  comenzar
+    RecibirMensaje (papeles, a1)
+    derecha
+    si (HayPapelEnLaEsquina)
+      mientras (HayPapelEnLaEsquina)
+        tomarPapel
+        papeles:= papeles + 1
+    repetir 9
+      mover 
+      si (HayPapelEnLaEsquina)
+        mientras (HayPapelEnLaEsquina)
+          tomarPapel
+          papeles:= papeles + 1
+    Informar (papeles)
+  fin
+  robot robotB1
+  variables
+    flores : numero
+  comenzar
+    flores:= 0
+    derecha
+    si (HayFlorEnLaEsquina)
+      mientras (HayFlorEnLaEsquina)
+        tomarFlor
+        flores:= flores + 1
+    repetir 9
+      mover
+      si (HayFlorEnLaEsquina)
+        mientras (HayFlorEnLaEsquina)
+          tomarFlor
+          flores:= flores + 1
+    EnviarMensaje (flores, b2)
+  fin
+  robot robotB2
+  variables
+    flores: numero
+  comenzar
+    RecibirMensaje (flores, b1)
+    derecha 
+    si (HayFlorEnLaEsquina)
+      mientras (HayFlorEnLaEsquina)
+        tomarFlor
+        flores:= flores +1 
+    repetir 9
+      mover
+      si (HayFlorEnLaEsquina)
+        mientras (HayFlorEnLaEsquina)
+          tomarFlor
+          flores:= flores + 1
+    Informar (flores)
+  fin
+variables
+  a1 : robotA1
+  a2 : robotA2
+  b1 : robotB1
+  b2 : robotB2
+comenzar
+  AsignarArea (a1, areaA1)
+  AsignarArea (a2, areaA2)
+  AsignarArea (b1, areaB1)
+  AsignarArea (b2, areaB2)
+  Iniciar (a1,1,1)
+  Iniciar (a2, 11,1)
+  Iniciar (b1,1,5)
+  Iniciar (b2,11,5)
+fin

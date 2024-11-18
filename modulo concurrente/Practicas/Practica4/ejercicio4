@@ -1,0 +1,97 @@
+programa ejercicio4
+procesos
+  proceso recogerFlores 
+  comenzar
+    si (HayFlorEnLaEsquina)
+      mientras (HayFlorEnLaEsquina)
+        tomarFlor  
+  fin
+  proceso recogerPapeles 
+  comenzar
+    si (HayPapelEnLaEsquina)
+      mientras (HayPapelEnLaEsquina)
+        tomarPapel
+  fin
+  proceso vaciarBolsa 
+  comenzar
+    mientras (HayFlorEnLaBolsa)
+      depositarFlor
+    mientras (HayPapelEnLaBolsa)
+      depositarPapel
+  fin
+areas
+  areaR1: AreaP (2,1,2,1)
+  areaR2: AreaP (3,1,3,1)
+  areaJ: AreaP (1,1,1,1)
+  ciudad: AreaC (2,2,100,100)
+robots
+  robot trabajador
+  variables 
+    tarea, av,ca, avAct, caAct: numero
+  comenzar
+    RecibirMensaje (tarea, j)
+    mientras (tarea <> 4)
+      RecibirMensaje (av, j)
+      RecibirMensaje (ca, j)
+      avAct:= PosAv
+      caAct:= PosCa
+      BloquearEsquina (av,ca)
+      Pos (av,ca)
+      si (tarea = 1)
+        recogerFlores
+      sino
+        si (tarea = 2)
+          recogerPapeles
+        sino
+          vaciarBolsa
+      Pos (avAct, caAct)
+      LiberarEsquina (av,ca)
+      EnviarMensaje (1,j)
+      RecibirMensaje (tarea, j)
+    EnviarMensaje (1, j)
+  fin
+  robot jefe
+  variables
+    av, ca, s, r, listo, listo2: numero
+  comenzar
+    repetir 10
+      Random (r,1,2)
+      Random (s, 1,4)
+      si (r = 1)
+        EnviarMensaje (s, r1)
+        si ( s <> 4)
+          Random (av,2,100)
+          EnviarMensaje (av, r1)
+          Random (ca, 2,100)
+          EnviarMensaje (ca, r1)
+          RecibirMensaje (s, r1)
+        sino  
+          RecibirMensaje (listo, r1)
+      sino
+        EnviarMensaje (s, r2)
+        si (s <> 4)
+          Random (av,2,100)
+          EnviarMensaje (av,r2)
+          Random (ca,2,100)
+          EnviarMensaje (ca,r2)
+          RecibirMensaje (s,r2)
+        sino
+          RecibirMensaje (listo2, r2)
+    EnviarMensaje (4, r1)
+    EnviarMensaje (4, r2)
+    RecibirMensaje (listo, r1)
+    RecibirMensaje (listo, r2)
+  fin
+variables
+  r1,r2: trabajador
+  j: jefe
+comenzar
+  AsignarArea (r1, areaR1)
+  AsignarArea (r1, ciudad)
+  AsignarArea (r2, areaR2)
+  AsignarArea (r2, ciudad)
+  AsignarArea (j, areaJ)
+  Iniciar (r1,2,1)
+  Iniciar (r2,3,1)
+  Iniciar (j,1,1)
+fin

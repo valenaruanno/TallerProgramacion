@@ -1,0 +1,94 @@
+programa ejercicio4
+procesos
+  proceso recorrer (E av: numero; E ca: numero; ES hay: boolean)
+  comenzar
+    BloquearEsquina (11,11)
+    Pos (11,11)
+    si (HayPapelEnLaEsquina)
+      tomarPapel
+    sino
+      hay := F
+    Pos (av, ca)
+    LiberarEsquina (11,11)
+    si (PosCa = 100)
+      hay:= F
+    si ((hay = V))
+      mover
+  fin
+areas
+  areaR1: AreaP (4,1,4,100)
+  areaR2: AreaP (6,1,6,100)
+  areaR3: AreaP (8,1,8,100)
+  areaR4: AreaP (10,1,10,100)
+  areaT: AreaPC (11,11,11,11)
+  coordi: AreaP (12,12,12,12)
+robots
+  robot recolector
+  variables 
+    av, ca, quien: numero
+    hay: boolean
+  comenzar
+    RecibirMensaje (quien, c)
+    hay:= V
+    mientras ((PosCa < 100) y (hay = V))
+      recorrer (PosAv, PosCa, hay)
+    si (hay = V)
+      av:= PosAv
+      BloquearEsquina (11,11)
+      Pos (11,11)
+      si (HayPapelEnLaEsquina)
+        tomarPapel
+      Pos (av, 100)
+    EnviarMensaje (quien, c)
+    EnviarMensaje (PosCa, c)
+  fin
+  robot coordinador
+  variables
+    posR1, posR2, posR3, posR4, quien: numero
+  comenzar
+    EnviarMensaje (1, r1)
+    EnviarMensaje (2,r2)
+    EnviarMensaje (3, r3)
+    EnviarMensaje (4, r4)
+    repetir 4
+      RecibirMensaje (quien, *)
+      si (quien = 1)
+        RecibirMensaje (posR1, r1)
+      sino
+        si (quien = 2)
+          RecibirMensaje (posR2, r2)
+        sino  
+          si (quien = 3)
+            RecibirMensaje (posR3, r3)
+          sino
+            RecibirMensaje (posR4, r4)
+    si ((posR1 > posR2) y (posR1 > posR3) y (posR1 > posR4))
+      Informar (1)
+    sino
+      si ((posR2 > posR1) y (posR2 > posR3) y (posR2 > posR4)) 
+        Informar (2)
+      sino
+        si ((posR3 > posR1) y (posR3 > posR2) y (posR3 > posR4))
+          Informar (3)
+        sino
+          Informar (4)
+  fin
+variables
+  r1, r2, r3, r4: recolector
+  c: coordinador
+comenzar
+  AsignarArea (r1, areaR1)
+  AsignarArea (r1, areaT)
+  AsignarArea (r2, areaR2)
+  AsignarArea (r2, areaT)
+  AsignarArea (r3, areaR3)
+  AsignarArea (r3, areaT)
+  AsignarArea (r4, areaR4)
+  AsignarArea (r4, areaT)
+  AsignarArea (c, coordi)
+  Iniciar (r1, 4,1)
+  Iniciar (r2, 6,1)
+  Iniciar (r3, 8,1)
+  Iniciar (r4, 10,1)
+  Iniciar (c, 12,12)
+fin

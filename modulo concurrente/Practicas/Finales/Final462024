@@ -1,0 +1,100 @@
+programa finalConcu2024
+procesos
+  proceso rutinaEscondedor (E quien: numero)
+  variables 
+    av, ca, avAct, caAct: numero
+  comenzar 
+    Random (av, 1, 5)
+    Random (ca, 1, 5)
+    avAct:= PosAv
+    caAct := PosCa
+    BloquearEsquina (av, ca)
+    Pos (av, ca)
+    si (quien = 1)
+      depositarFlor 
+    sino
+      depositarPapel
+    Pos (avAct, caAct)
+    LiberarEsquina (av, ca) 
+  fin
+  proceso rutinaBuscador (E quien: numero; ES cant: numero)
+  variables 
+    av, ca, avAct, caAct: numero
+  comenzar 
+    Random (av, 1, 5)
+    Random (ca, 1, 5)
+    avAct:= PosAv
+    caAct:= PosCa
+    BloquearEsquina (av, ca)
+    Pos (av, ca)
+    si (quien = 1)
+      si (HayPapelEnLaEsquina)
+        tomarPapel
+        cant:= cant + 1
+    sino
+      si (HayFlorEnLaEsquina)
+        tomarFlor
+        cant:= cant + 1
+    Pos (avAct, caAct)
+    LiberarEsquina (av, ca)
+  fin
+areas
+  aFis: AreaP (6,5,6,5)
+  aBf: AreaP (6,1,6,1)
+  aBp: AreaP (6,2,6,2)
+  aEf: AreaP (6,3,6,3)
+  aEp: AreaP (6,4,6,4)
+  ciu: AreaC (1,1,5,5)
+robots 
+  robot escondedor
+  variables 
+    quien: numero
+  comenzar 
+    RecibirMensaje (quien, f)
+    repetir 2
+      rutinaEscondedor (quien)
+    si (quien = 1)
+      EnviarMensaje (quien, Bf)
+    sino 
+      EnviarMensaje (quien, Bp)
+  fin
+  robot buscador 
+  variables 
+    quien, cant: numero
+  comenzar 
+    RecibirMensaje (quien, *)
+    cant:= 0
+    mientras (cant < 2)
+      rutinaBuscador (quien, cant)
+    EnviarMensaje (quien, f)
+  fin
+  robot fiscalizador 
+  variables 
+    winner, segundo: numero
+  comenzar 
+    EnviarMensaje (1, Ef)
+    EnviarMensaje (2, Ep)
+    RecibirMensaje (winner, *)
+    RecibirMensaje (segundo, *)
+    Informar (winner)
+  fin
+variables 
+  f: fiscalizador
+  Bf, Bp: buscador
+  Ef, Ep: escondedor
+comenzar 
+  AsignarArea (f, aFis)
+  AsignarArea (Bf, aBf)
+  AsignarArea (Bf, ciu)
+  AsignarArea (Bp, aBp)
+  AsignarArea (Bp, ciu)
+  AsignarArea (Ef, aEf)
+  AsignarArea (Ef, ciu)
+  AsignarArea (Ep, aEp)
+  AsignarArea (Ep, ciu)
+  Iniciar (f, 6, 5)
+  Iniciar (Bf, 6, 1)
+  Iniciar (Bp, 6, 2)
+  Iniciar (Ef, 6, 3)
+  Iniciar (Ep, 6, 4)
+fin

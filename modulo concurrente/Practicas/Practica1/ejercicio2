@@ -1,0 +1,76 @@
+programa ejercicio2
+procesos
+  proceso lado (ES cantPapeles : numero)
+  comenzar
+    repetir 18
+      si (HayPapelEnLaEsquina)
+        mientras (HayPapelEnLaEsquina)
+          tomarPapel
+          cantPapeles:= cantPapeles + 1
+      mover
+    si (HayPapelEnLaEsquina)
+      mientras (HayPapelEnLaEsquina)
+        tomarPapel
+        cantPapeles:= cantPapeles + 1
+  fin
+areas 
+  vII: AreaP(10,10,10,29)
+  vSI: AreaP(10,30,29,30)
+  vSD: AreaP(30,30,30,11)
+  vID: AreaP(30,10,11,10)
+robots 
+  robot1: tipo1
+  robot2: tipo2
+  robot3: tipo3
+  robot4: tipo4
+variables
+  robot tipo1
+  variables
+    cant : numero
+  comenzar
+    cant:= 0
+    lado (cant)
+    Informar (cant)
+  fin
+  
+  robot tipo2
+  variables
+    cant : numero
+  comenzar
+    cant:= 0
+    derecha
+    lado (cant)
+    Informar (cant)
+  fin
+  
+  robot tipo3
+  variables
+    cant : numero
+  comenzar 
+    cant := 0
+    repetir 2
+      derecha
+    lado (cant)
+    Informar (cant)
+  fin
+  
+  robot tipo4
+  variables
+    cant : numero
+  comenzar
+    repetir 3
+      derecha
+    cant:= 0
+    lado (cant)
+    Informar (cant)
+  fin
+comenzar
+  AsignarArea (robot1, vII)
+  AsignarArea (robot2, vSI)
+  AsignarArea (robot3, vSD)
+  AsignarArea (robot4, vID)
+  Iniciar (robot1,10,10)
+  Iniciar (robot2, 10,30)
+  Iniciar (robot3, 30,30)
+  Iniciar (robot4, 30, 10)
+fin

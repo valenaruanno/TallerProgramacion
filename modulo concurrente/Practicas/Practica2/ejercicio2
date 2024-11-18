@@ -1,0 +1,84 @@
+programa ejercicio2
+procesos
+  proceso altura (ES flores: numero; ES papeles: numero)
+  variables 
+    cant: numero
+  comenzar 
+    Random (cant, 1,5)
+    repetir cant - 1
+      si (HayFlorEnLaEsquina)
+        mientras (HayFlorEnLaEsquina)
+          tomarFlor
+          flores:= flores + 1
+      si (HayPapelEnLaEsquina)
+        mientras (HayPapelEnLaEsquina)
+          tomarPapel
+          papeles:= papeles + 1
+      mover
+    si (HayFlorEnLaEsquina)
+      mientras (HayFlorEnLaEsquina)
+        tomarFlor
+        flores:= flores + 1
+    si (HayPapelEnLaEsquina)
+      mientras (HayPapelEnLaEsquina)
+        tomarPapel
+        papeles:= papeles + 1
+    derecha
+    mover
+  fin
+  
+areas 
+  areaJ : AreaP (1,1,1,1)
+  ciudad : AreaC (2,1,100,100)
+robots
+  robot recolector
+  variables 
+    flores: numero
+    papeles: numero
+    cant: numero
+    quien: numero
+  comenzar 
+    cant:= 0
+    flores:= 0
+    papeles:= 0
+    altura (flores, papeles)
+    si (flores > papeles)
+      cant:= cant + 1
+    repetir 3
+      flores:= 0
+      papeles:= 0
+      repetir 3
+        derecha
+      altura (flores, papeles)
+      si (flores > papeles)
+        cant:= cant + 1
+    EnviarMensaje (cant, j)
+  fin
+  
+  robot jefe 
+  variables
+    r1: numero
+    r2: numero
+    r3: numero
+  comenzar 
+    RecibirMensaje (r1, *)
+    RecibirMensaje (r2, *)
+    RecibirMensaje (r3, *)
+    Informar (r1 + r2 + r3)
+  fin
+  
+variables
+  robot1: recolector
+  robot2: recolector
+  robot3: recolector
+  j: jefe
+comenzar 
+  AsignarArea (j, areaJ)
+  AsignarArea (robot1, ciudad)
+  AsignarArea (robot2, ciudad)
+  AsignarArea (robot3, ciudad)
+  Iniciar (j,1,1)
+  Iniciar (robot1, 2,1)
+  Iniciar (robot2,7,1)
+  Iniciar (robot3,12,1)
+fin

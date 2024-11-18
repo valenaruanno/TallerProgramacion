@@ -1,0 +1,108 @@
+programa ejercicio2
+procesos
+  proceso juntarPapeles
+  comenzar
+    si (HayPapelEnLaEsquina)
+      mientras (HayPapelEnLaEsquina)
+        tomarPapel
+  fin
+  proceso juntarFlores
+  comenzar 
+    si (HayFlorEnLaEsquina)
+      mientras (HayFlorEnLaEsquina)
+        tomarFlor
+  fin
+  proceso escalon (E cant: numero; E que: numero)
+  comenzar
+    repetir cant
+      mover
+    si (que = 1)
+      juntarFlores 
+      derecha
+    sino
+      juntarPapeles 
+      repetir 3
+        derecha
+    repetir cant 
+      mover 
+    si (que = 1)
+      juntarFlores 
+    sino
+      juntarPapeles 
+  fin
+areas
+  ciudad : AreaC (1,1,31,31)
+robots
+  robot florero
+  variables 
+    cant, quien: numero
+  comenzar
+    RecibirMensaje (quien, jefe)
+    cant:= 5
+    mientras (cant > 1)
+      escalon (cant, 1)
+      repetir 3
+        derecha
+      cant:= cant - 1
+    BloquearEsquina (16,16)
+    escalon (cant, 1)
+    EnviarMensaje (quien, jefe)
+    repetir 2
+      derecha
+    mover
+    LiberarEsquina (16,16)
+    cant:= 2
+    mientras (cant <= 5)
+      escalon (cant, 1)
+      repetir 3
+        derecha
+      cant:= cant + 1
+    EnviarMensaje (quien, jefe)
+  fin
+  robot papelero
+  variables
+    cant, quien: numero
+  comenzar 
+    RecibirMensaje (quien, jefe)
+    cant:= 5
+    mientras (cant > 1)
+      escalon (cant, 0)
+      derecha
+      cant:= cant - 1
+    BloquearEsquina (16,16)
+    escalon (cant, 0)
+    EnviarMensaje (quien, jefe)
+    repetir 2
+      derecha
+    mover
+    LiberarEsquina (16,16)
+    cant:= 2
+    mientras (cant <= 5)
+      escalon (cant, 0)
+      derecha
+      cant:= cant + 1
+    EnviarMensaje (quien, jefe)
+  fin
+  robot j
+  variables
+    ganador, n: numero
+  comenzar
+    EnviarMensaje (1, f)
+    EnviarMensaje (2, p)
+    RecibirMensaje (ganador, *)
+    repetir 3
+      RecibirMensaje (n, *)
+    Informar(ganador)
+  fin
+variables
+  f: florero
+  p: papelero
+  jefe: j
+comenzar
+  AsignarArea (f, ciudad)
+  AsignarArea (p, ciudad)
+  AsignarArea (jefe, ciudad)
+  Iniciar(f, 1,1)
+  Iniciar(p,31,1)
+  Iniciar(jefe, 15,1)
+fin

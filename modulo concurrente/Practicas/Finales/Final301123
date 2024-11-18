@@ -1,0 +1,98 @@
+programa finalConcu
+procesos
+  proceso juntarFlores (ES flores: numero)
+  comenzar 
+    si (HayFlorEnLaEsquina)
+      mientras (HayFlorEnLaEsquina)
+        tomarFlor
+        flores:= flores + 1
+  fin
+  proceso rutina (E quien: numero)
+  variables 
+    flores, av, ca, avAct, caAct: numero
+  comenzar 
+    flores:= 0
+    EnviarMensaje (quien, f)
+    RecibirMensaje (av, f)
+    RecibirMensaje (ca, f)
+    avAct:= PosAv
+    caAct:= PosCa
+    BloquearEsquina (av, ca)
+    Pos (av, ca)
+    juntarFlores (flores)
+    Pos (avAct, caAct)
+    LiberarEsquina (av, ca)
+    EnviarMensaje (flores, f)
+  fin
+areas 
+  areaJ : AreaC (1,1,20,20)
+  areaR1: AreaP (21,21,21,21)
+  areaR2: AreaP (22,22,22,22)
+  areaF: AreaP (23,23,23,23)
+  areaD: AreaPC (25,25,25,25)
+robots 
+  robot jugador
+  variables 
+    quien, s, av, ca: numero
+  comenzar 
+    RecibirMensaje (quien, f)
+    repetir 5
+      rutina (quien)
+    RecibirMensaje (s, f)
+    si (s = 0)
+      av:= PosAv
+      ca:= PosCa
+      Pos (25,25)
+      si (HayFlorEnLaBolsa)
+        mientras (HayFlorEnLaBolsa)
+          depositarFlor
+      Pos (av, ca)
+  fin
+  robot fiscalizador
+  variables 
+    quien, cantR1, cantR2, cant, av, ca, c: numero
+  comenzar
+    EnviarMensaje (1, r1)
+    EnviarMensaje (2, r2)
+    cantR1:= 0
+    cantR2:= 0
+    c:= 10
+    mientras (c > 0)
+      c:= c - 1
+      RecibirMensaje (quien, *)
+      Random (av, 1, 20)
+      Random (ca, 1, 20)
+      si (quien = 1)
+        EnviarMensaje (av, r1)
+        EnviarMensaje (ca, r1)
+        RecibirMensaje (cant, r1)
+        cantR1:= cantR1 + cant
+      sino
+        EnviarMensaje (av, r2)
+        EnviarMensaje (ca, r2)
+        RecibirMensaje (cant, r2)
+        cantR2:= cantR2 + cant
+    si (cantR1 > cantR2)
+      EnviarMensaje (0, r2)
+      EnviarMensaje (1, r1)
+      Informar (1)
+    sino
+      EnviarMensaje (0, r1)
+      EnviarMensaje (1, r2)
+      Informar (2)
+  fin
+variables 
+  r1, r2: jugador
+  f: fiscalizador
+comenzar 
+  AsignarArea(r1, areaR1)
+  AsignarArea(r1, areaJ)
+  AsignarArea(r1, areaD)
+  AsignarArea(r2, areaR2)
+  AsignarArea(r2, areaJ)
+  AsignarArea(r2, areaD)
+  AsignarArea(f, areaF)
+  Iniciar (r1, 21,21)
+  Iniciar (r2, 22,22)
+  Iniciar (f, 23,23)
+fin

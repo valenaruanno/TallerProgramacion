@@ -1,0 +1,190 @@
+programa ejercicio1P2
+procesos 
+  proceso juntar (ES flores : numero)
+  comenzar
+    mientras (HayFlorEnLaEsquina)
+      tomarFlor
+      flores:= flores + 1
+  fin
+areas 
+  areaR1 : AreaP (1,1,1,10)
+  areaR2 : AreaP (2,11,2,20)
+  areaR3 : AreaP (3,21,3,30)
+  areaR4 : AreaP (4,31,4,40)
+  areaR5 : AreaP (5,41,5,50)
+  areaR6 : AreaP (6,51,6,60)
+  areaRF : AreaP (2,1,2,1)
+robots
+  robot rutina
+  variables 
+    cantFlores : numero
+    quien : numero
+  comenzar 
+    RecibirMensaje (quien, fiscalizador)
+    cantFlores:= 0
+    repetir 9 
+      si (HayFlorEnLaEsquina)
+        juntar (cantFlores)
+      mover
+    si (HayFlorEnLaEsquina)
+      juntar (cantFlores)
+    EnviarMensaje (quien, fiscalizador)
+    EnviarMensaje (cantFlores, fiscalizador)    
+  fin
+  
+  robot fiscalizador 
+  variables 
+    dif: numero
+    totR1: numero
+    totR2: numero
+    totR3: numero
+    totR4: numero
+    totR5: numero
+    totR6: numero 
+    quien: numero
+  comenzar 
+    EnviarMensaje (1, robot1)
+    EnviarMensaje (2, robot2)
+    EnviarMensaje (3, robot3)
+    EnviarMensaje (4, robot4)
+    EnviarMensaje (5, robot5)
+    EnviarMensaje (6, robot6)
+    RecibirMensaje (quien, *)
+    si (quien = 1)
+      RecibirMensaje (totR1, robot1)
+    sino
+      si (quien = 2)
+        RecibirMensaje (totR2, robot2)
+      sino
+        si (quien = 3)
+          RecibirMensaje (totR3, robot3)
+        sino
+          si (quien = 4)
+            RecibirMensaje (totR4, robot4)
+          sino
+            si (quien = 5)
+              RecibirMensaje (totR5, robot5)
+            sino
+              RecibirMensaje (totR6, robot6)
+    si (quien = 1)
+      RecibirMensaje (totR1, robot1)
+    sino
+      si (quien = 2)
+        RecibirMensaje (totR2, robot2)
+      sino
+        si (quien = 3)
+          RecibirMensaje (totR3, robot3)
+        sino
+          si (quien = 4)
+            RecibirMensaje (totR4, robot4)
+          sino
+            si (quien = 5)
+              RecibirMensaje (totR5, robot5)
+            sino
+              RecibirMensaje (totR6, robot6)
+    si (quien = 1)
+      RecibirMensaje (totR1, robot1)
+    sino
+      si (quien = 2)
+        RecibirMensaje (totR2, robot2)
+      sino
+        si (quien = 3)
+          RecibirMensaje (totR3, robot3)
+        sino
+          si (quien = 4)
+            RecibirMensaje (totR4, robot4)
+          sino
+            si (quien = 5)
+              RecibirMensaje (totR5, robot5)
+            sino
+              RecibirMensaje (totR6, robot6)
+    si (quien = 1)
+      RecibirMensaje (totR1, robot1)
+    sino
+      si (quien = 2)
+        RecibirMensaje (totR2, robot2)
+      sino
+        si (quien = 3)
+          RecibirMensaje (totR3, robot3)
+        sino
+          si (quien = 4)
+            RecibirMensaje (totR4, robot4)
+          sino
+            si (quien = 5)
+              RecibirMensaje (totR5, robot5)
+            sino
+              RecibirMensaje (totR6, robot6)
+    si (quien = 1)
+      RecibirMensaje (totR1, robot1)
+    sino
+      si (quien = 2)
+        RecibirMensaje (totR2, robot2)
+      sino
+        si (quien = 3)
+          RecibirMensaje (totR3, robot3)
+        sino
+          si (quien = 4)
+            RecibirMensaje (totR4, robot4)
+          sino
+            si (quien = 5)
+              RecibirMensaje (totR5, robot5)
+            sino
+              RecibirMensaje (totR6, robot6)
+    si (quien = 1)
+      RecibirMensaje (totR1, robot1)
+    sino
+      si (quien = 2)
+        RecibirMensaje (totR2, robot2)
+      sino
+        si (quien = 3)
+          RecibirMensaje (totR3, robot3)
+        sino
+          si (quien = 4)
+            RecibirMensaje (totR4, robot4)
+          sino
+            si (quien = 5)
+              RecibirMensaje (totR5, robot5)
+            sino
+              RecibirMensaje (totR6, robot6)
+
+    si (totR1 > totR2) y (totR1 > totR3) y (totR1 > totR4) y (totR1 > totR5) y (totR1 > totR6)
+      Informar (1)
+    sino 
+      si (totR2 > totR1) y (totR2 > totR3) y (totR2 > totR4) y (totR2 > totR5) y (totR2 > totR6)
+        Informar(2)
+      sino
+        si (totR3 > totR1) y (totR3 > totR2) y (totR3 > totR4) y (totR3 > totR5) y (totR3 > totR6)
+          Informar (3)
+        sino
+          si (totR4 > totR1) y (totR4 > totR2) y (totR4 > totR3) y (totR4 > totR5) y (totR4 > totR6)
+            Informar (4)
+          sino
+            si (totR5 > totR1) y (totR5 > totR2) y (totR5 > totR3) y (totR5 > totR4) y (totR5 > totR6)
+              Informar (5)
+            sino
+              Informar (6)
+  fin  
+variables
+  robot1: rutina
+  robot2: rutina
+  robot3: rutina
+  robot4: rutina
+  robot5: rutina
+  robot6: rutina
+  fiscalizador : fiscalizador
+comenzar
+  AsignarArea (robot1, areaR1)
+  AsignarArea (robot2, areaR2)
+  AsignarArea (robot3, areaR3)
+  AsignarArea (robot4, areaR4)
+  AsignarArea (robot5, areaR5)
+  AsignarArea (robot6, areaR6)
+  AsignarArea (fiscalizador, areaRF)
+  Iniciar (robot1,1,1)
+  Iniciar (robot2, 2,11)
+  Iniciar (robot3, 3, 21)
+  Iniciar (robot4, 4, 31)
+  Iniciar (robot5, 5, 41)
+  Iniciar (robot6, 6, 51)
+  Iniciar (fiscalizador,2,1)
+fin
